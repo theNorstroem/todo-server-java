@@ -1,0 +1,68 @@
+package com.adcubum.bff;
+
+import io.grpc.Server;
+import io.grpc.ServerBuilder;
+import io.grpc.stub.StreamObserver;
+
+import java.util.Arrays;
+import java.util.logging.Logger;
+
+import {{.__proto.options.java_package}}.{{.name}}Grpc;
+
+public class BffServer {
+
+    private static final Logger logger = Logger.getLogger(BffServer.class.getName());
+
+    private int port = 9090;
+    private Server server;
+
+    private void start() throws Exception {
+        logger.info("Starting the grpc server");
+
+        server = ServerBuilder.forPort(port)
+                .addService(new {{.name}}Impl())
+                .build()
+                .start();
+
+        logger.info("Server started. Listening on port " + port);
+
+    }
+
+    private void stop() {
+        if (server != null) {
+            server.shutdown();
+        }
+    }
+
+    public static void main(String[] args) throws Exception {
+        logger.info("Server startup. Args = " + Arrays.toString(args));
+        final BffServer BffServer = new BffServer();
+
+        BffServer.start();
+        BffServer.blockUntilShutdown();
+    }
+
+    private void blockUntilShutdown() throws InterruptedException {
+        if (server != null) {
+            server.awaitTermination();
+        }
+    }
+    {{$package := .__proto.options.java_package}} {{$class :=  .name }} {{ $arrServiceName := splitList "." .__proto.targetfile}}{{$serviceName := title (first $arrServiceName)}}
+    private class {{.name}}Impl extends {{.name}}Grpc.{{.name}}ImplBase {
+        {{range $key, $service := .services}}
+        @Override
+        public void {{untitle $service.rpc_name}}(   {{$package}}.{{$key}}{{$class}}Request request, {{if $service.data.response }}  {{ $arrResponse := splitList "." $service.data.response}}  {{ if eq (first $arrResponse) "google"}}{{$responseSevice := last $arrResponse }}{{$responseSevice := $service.data.response | replace $responseSevice "" }}
+                                  io.grpc.stub.StreamObserver{{"<" | noescape}}{{$responseSevice}}{{last $arrResponse }}.signatures.{{last $arrResponse }}> responseObserver) {  {{else}} {{ $arr := splitList "." $service.data.response}}
+                                  io.grpc.stub.StreamObserver{{"<" | noescape}}{{first $arr}}.{{title (first $arr)}}.signatures.{{last $arr}}> responseObserver) {  {{end}}
+                         {{else}}
+                                                                      {{ $arr := splitList "." $service.data.response}}
+                                                                      io.grpc.stub.StreamObserver{{"<" | noescape}}{{first $arr}}.{{title (first $arr)}}.signatures.{{last $arr}}> responseObserver) {
+                        {{end}}{{ $arr := splitList "." $service.data.response}}{{if $service.data.response }}  {{ $arrResponse := splitList "." $service.data.response}}  {{ if eq (first $arrResponse) "google"}}{{$responseSevice := last $arrResponse }}{{$responseSevice := $service.data.response | replace $responseSevice "" }}
+            {{$responseSevice}}{{last $arrResponse }}.signatures.{{last $arrResponse }} res = {{$responseSevice}}{{last $arrResponse }}.signatures.{{last $arrResponse }}.newBuilder().build();{{else}}
+            {{first $arr}}.{{title (first $arr)}}.signatures.{{last $arr}} res = {{first $arr}}.{{title (first $arr)}}.signatures.{{last $arr}}.newBuilder().build(); {{end}} {{end}}
+
+            responseObserver.onNext(res);
+            responseObserver.onCompleted();
+        }{{end}}
+    }
+}

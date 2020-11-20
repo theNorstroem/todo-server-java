@@ -1,0 +1,23 @@
+{
+  "name": "simple-test-bff",
+  "version": "0.0.1",
+  "description": "simple test bff project",
+  "author": "Adcubum AG",
+  "license": "unknown",
+  "repository": "",
+  "private": true,
+  "scripts": {
+    "build": "scripts/build.js",
+    "gateway": "scripts/startGateway.js",
+    "genserver": "scripts/genServer.js "
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@furo/specs": "1.10.1",
+    "@furo/spec-basetypes": "1.8.0",
+    "yargs": "15.1.0"
+  },
+  "engines": {
+    "node": ">=8.0"
+  }
+}
