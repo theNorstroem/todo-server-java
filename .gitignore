@@ -111,3 +111,6 @@
 /build/extracted-include-protos/test/task/task.proto
 /build/extracted-include-protos/test/task/taskservice.proto
 /build/
+/node_modules/
+/dependencies/generated/
+/.gradle/
