@@ -47,7 +47,7 @@ public class TaskServiceImpl extends TasksGrpc.TasksImplBase {
    public void getTask(GetTaskRequest request,
          io.grpc.stub.StreamObserver<TaskEntity> responseObserver) {
 
-      TaskEntity res = TaskEntity.newBuilder().build();
+      TaskEntity res = TaskMock.TASK_ENTITY_1;
 
       responseObserver.onNext(res);
       responseObserver.onCompleted();
@@ -57,7 +57,7 @@ public class TaskServiceImpl extends TasksGrpc.TasksImplBase {
    public void listTasks(ListTasksRequest request,
          io.grpc.stub.StreamObserver<TaskCollection> responseObserver) {
 
-      TaskCollection res = TaskCollection.newBuilder().build();
+      TaskCollection res = TaskMock.TASK_COLLECTION_1;
 
       responseObserver.onNext(res);
       responseObserver.onCompleted();
@@ -77,7 +77,7 @@ public class TaskServiceImpl extends TasksGrpc.TasksImplBase {
    public void updateTask(UpdateTaskRequest request,
          io.grpc.stub.StreamObserver<TaskEntity> responseObserver) {
 
-      TaskEntity res = TaskEntity.newBuilder().build();
+      TaskEntity res = TaskMock.TASK_ENTITY_2;
 
       responseObserver.onNext(res);
       responseObserver.onCompleted();

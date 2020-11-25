@@ -4,6 +4,7 @@ import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import java.util.Arrays;
 import java.util.logging.Logger;
+import pro.furo.todo.impl.person.PersonServiceImpl;
 import pro.furo.todo.impl.task.TaskServiceImpl;
 
 public class TodoServer {
@@ -18,6 +19,7 @@ public class TodoServer {
 
       server = ServerBuilder.forPort(port)
             .addService(new TaskServiceImpl())
+            .addService(new PersonServiceImpl())
             .build()
             .start();
 
