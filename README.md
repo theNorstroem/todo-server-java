@@ -1,13 +1,13 @@
  # Server for Todo Sample App
  
  this is an example backend server for the demonstration of how to use the generated gRPC stubs.
- There are only a few of implementations with mock data in this sample server. 
+ There are only a few of implementations with **mock** data in this sample server. 
  
-- the specs and protos which from the [spec project](https://github.com/theNorstroem/todo-specs) are 
+- the specs and protos which come from the [spec project](https://github.com/theNorstroem/todo-specs) are 
 copied in the dependencies/todo-specs folder. You may replace them with you spec repo in your project.
 - the stubs of gRPC will be generated from protos. those generated java classes will be located in 
 '/dependencies/generated' folder
-- todo server should implements the generated gRPC service classes and register those service. 
+- todo server should implement the generated gRPC service classes and register those services. 
  
  ## build java class from protos
   
